@@ -146,8 +146,8 @@
         <el-form-item label="字典类型">
           <el-input v-model="form.dictType" :disabled="true" />
         </el-form-item>
-        <el-form-item label="数据标签" prop="dictLabel">
-          <el-input v-model="form.dictLabel" placeholder="请输入数据标签" />
+        <el-form-item label="字典标签" prop="dictLabel">
+          <el-input v-model="form.dictLabel" placeholder="请输入字典标签" />
         </el-form-item>
         <el-form-item label="数据键值" prop="dictValue">
           <el-input v-model="form.dictValue" placeholder="请输入数据键值" />
@@ -218,7 +218,7 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
-      // 数据标签回显样式
+      // 字典标签回显样式
       listClassOptions: [
         {
           value: "default",
@@ -260,7 +260,7 @@ export default {
       // 表单校验
       rules: {
         dictLabel: [
-          { required: true, message: "数据标签不能为空", trigger: "blur" }
+          { required: true, message: "字典标签不能为空", trigger: "blur" }
         ],
         dictValue: [
           { required: true, message: "数据键值不能为空", trigger: "blur" }

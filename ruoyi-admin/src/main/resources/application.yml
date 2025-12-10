@@ -7,7 +7,7 @@ ruoyi:
   # 版权年份
   copyrightYear: 2025
   # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
-  profile: D:/ruoyi/uploadPath
+  profile: /Users/zlong/Up/Upload
   # 获取ip地址开关
   addressEnabled: false
   # 验证码类型 math 数字计算 char 字符验证
@@ -74,7 +74,7 @@ spring:
     # 数据库索引
     database: 0
     # 密码
-    password:
+    password: MyRedis@123456
     # 连接超时时间
     timeout: 10s
     lettuce:
