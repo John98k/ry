@@ -1,5 +1,5 @@
 # 替换为阿里云的openjdk 8-jre-alpine镜像（国内稳定）
-FROM registry.cn-hangzhou.aliyuncs.com/acs/openjdk:8-jre-alpine
+FROM mirror.aliyun.com/library/openjdk:8-jre-alpine
 WORKDIR /app
 COPY ./ruoyi-admin/target/ruoyi-admin.jar app.jar
 EXPOSE 8080
