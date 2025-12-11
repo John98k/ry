@@ -7,7 +7,6 @@ pipeline {
     // 关闭Shell命令的「快速失败」，打印完整错误
     environment {
         WORKSPACE_DIR = "/var/jenkins_home/workspace/ry-jenkins"  // 【修改1】你的流水线工作空间目录
-        BACK_ROOT = "${WORKSPACE_DIR}/ry-vue"
         BACK_MODULE = "${WORKSPACE_DIR}/ruoyi-admin"
         FRONT_DIR = "${WORKSPACE_DIR}/ruoyi-ui"
     }
@@ -23,8 +22,6 @@ pipeline {
                 sh '''
                     echo "===== 工作空间目录 ====="
                     ls -l ${WORKSPACE_DIR}/
-                    echo "===== ry-vue根目录 ====="
-                    ls -l ${BACK_ROOT}/
                     echo "===== ruoyi-admin目录 ====="
                     ls -l ${BACK_MODULE}/
                     echo "===== ruoyi-ui目录 ====="
@@ -48,7 +45,7 @@ pipeline {
                     fi
 
                     # 2. 进入ruoyi-admin打包（核心！）
-                    cd ${BACK_MODULE}
+                    cd ${WORKSPACE_DIR}
                     echo "当前Maven执行目录：$(pwd)"
                     # 用绝对路径执行Maven，避免环境问题
                     /var/jenkins_home/tools/hudson.tasks.Maven_MavenInstallation/Maven_3.9/bin/mvn clean package -DskipTests
@@ -59,10 +56,10 @@ pipeline {
                     docker rm ruoyi-backend || echo "后端容器不存在，跳过删除"
 
                     echo "构建并启动后端容器..."
-                    cd ${BACK_ROOT}
+                    cd ${WORKSPACE_DIR}
                     # 检查Dockerfile是否存在
-                    if [ ! -f "${BACK_ROOT}/Dockerfile" ]; then
-                        echo "❌ 后端Dockerfile不存在：${BACK_ROOT}/Dockerfile"
+                    if [ ! -f "${WORKSPACE_DIR}/Dockerfile" ]; then
+                        echo "❌ 后端Dockerfile不存在：${WORKSPACE_DIR}/Dockerfile"
                         exit 1
                     fi
                     docker build -t ruoyi-backend:latest .
