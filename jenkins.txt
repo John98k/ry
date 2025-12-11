@@ -1,0 +1,78 @@
+http://localhost:8080/Jenkins
+pipeline {
+    agent any  // 使用任意可用的代理节点
+    tools {
+        nodejs 'Node.js 18'  // 对应Jenkins全局工具配置的Node.js名称（需和你配置的一致）
+        maven 'Maven 3.9'    // 对应Jenkins全局工具配置的Maven名称（需和你配置的一致）
+    }
+    stages {
+        // 阶段1：拉取RuoYi-Vue完整代码（前后端同仓）
+        stage('拉取代码') {
+            steps {
+                echo '开始拉取RuoYi-Vue项目代码...'
+                git url: 'https://gitee.com/baozaoyinu/ry-vue.git',
+                    credentialsId: 'gitee',
+                    branch: 'master'
+            }
+        }
+
+        // 阶段2：部署后端（RuoYi-Vue根目录）
+        stage('部署后端') {
+            steps {
+                echo '开始构建RuoYi-Vue后端项目...'
+                dir('RuoYi-Vue') {  // 后端代码根目录（无需修改）
+                    // 打包后端（跳过测试，RuoYi-Vue默认打包为jar）
+                    sh 'mvn clean package -DskipTests'
+
+                    echo '停止旧后端容器...'
+                    sh 'docker stop ruoyi-backend || true'  // 【修改4】自定义后端容器名（可选）
+                    sh 'docker rm ruoyi-backend || true'
+
+                    echo '构建后端Docker镜像并启动...'
+                    sh '''
+                        # 构建后端镜像（需确保RuoYi-Vue根目录有Dockerfile，若无则先创建，见下方说明）
+                        docker build -t ruoyi-backend:latest .
+                        # 启动后端容器（端口映射：宿主机8080→容器8080，RuoYi-Vue后端默认8080）
+                        docker run -d --name ruoyi-backend --restart=always -p 8080:8080 ruoyi-backend:latest
+                    '''
+                }
+            }
+        }
+
+        // 阶段3：部署前端（RuoYi-Vue/ruoyi-ui子目录）
+        stage('部署前端') {
+            steps {
+                echo '开始构建RuoYi-Vue前端项目...'
+                dir('RuoYi-Vue/ruoyi-ui') {  // 前端代码子目录（无需修改）
+                    // 安装前端依赖（淘宝源加速）
+                    sh 'npm install --registry=https://registry.npmmirror.com'
+                    // 打包前端（RuoYi-Vue前端默认npm run build:prod）
+                    sh 'npm run build'
+
+                    echo '停止旧前端容器...'
+                    sh 'docker stop ruoyi-frontend || true'  // 【修改5】自定义前端容器名（可选）
+                    sh 'docker rm ruoyi-frontend || true'
+
+                    echo '构建前端Docker镜像并启动...'
+                    sh '''
+                        # 构建前端镜像（需确保ruoyi-ui目录有Dockerfile，若无则先创建，见下方说明）
+                        docker build -t ruoyi-frontend:latest .
+                        # 启动前端容器（端口映射：宿主机80:80，可改为8000:80）
+                        docker run -d --name ruoyi-frontend --restart=always -p 80:80 ruoyi-frontend:latest
+                    '''
+                }
+            }
+        }
+    }
+    post {
+        success {
+            echo '✅ RuoYi-Vue前后端部署成功！'
+            echo '前端访问地址：http://服务器IP（或localhost）'  // 端口80可省略，若改8000则加:8000
+            echo '后端访问地址：http://服务器IP:8080'
+            echo '默认账号密码：admin/admin123'
+        }
+        failure {
+            echo '❌ 部署失败！请查看控制台日志排查问题...'
+        }
+    }
+}
