@@ -1,5 +1,5 @@
 # 替换为阿里云的openjdk 8-jre-alpine镜像（国内稳定）
-FROM repo.huaweicloud.com/library/openjdk:8-jre-alpine
+FROM eclipse-temurin:8-jre
 WORKDIR /app
 COPY ./ruoyi-admin/target/ruoyi-admin.jar app.jar
 EXPOSE 8080
