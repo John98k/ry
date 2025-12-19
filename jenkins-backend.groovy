@@ -28,8 +28,21 @@ pipeline {
         stage('初始化') {
             steps {
                 script {
-                    echo '===== 环境初始化 ====='
-                    // 创建Docker网络，确保前后端容器互通
+                    echo '===== 环境初始化与检查 ====='
+                    // 打印工具版本，确认命令是否存在
+                    try {
+                        sh "mvn -v"
+                    } catch (Exception e) {
+                        echo "⚠️ 警告：找不到 mvn 命令，请检查 Jenkins 全局工具配置名称是否为 'Maven 3.9'"
+                    }
+                    
+                    try {
+                        sh "docker -v"
+                    } catch (Exception e) {
+                        echo "⚠️ 警告：找不到 docker 命令，请检查 Jenkins 用户是否有 docker 权限"
+                    }
+
+                    // 创建Docker网络
                     sh "docker network create ${NETWORK_NAME} || true"
                 }
             }
