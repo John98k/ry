@@ -3,20 +3,16 @@ pipeline {
 
     tools {
         nodejs 'Node.js 18'  // 请确保Jenkins全局工具配置中名称一致
-        maven 'Maven 3.9'    // 请确保Jenkins全局工具配置中名称一致
     }
 
     environment {
         // 使用Jenkins内置变量 WORKSPACE
-        BACK_MODULE = "${WORKSPACE}/ruoyi-admin"
         FRONT_DIR = "${WORKSPACE}/ruoyi-ui"
         
         // 镜像名称
-        BACK_IMAGE = "ruoyi-backend:latest"
         FRONT_IMAGE = "ruoyi-frontend:latest"
         
         // 端口映射
-        BACK_PORT = "8080"
         FRONT_PORT = "80"
         
         // Docker网络名称（用于容器互通）
@@ -44,53 +40,50 @@ pipeline {
 
         stage('代码编译') {
             parallel {
-                stage('后端Maven编译') {
+                stage('前端Node编译') {
                     steps {
                         script {
-                            echo '===== 开始编译后端 ====='
-                            // 在项目根目录执行 install，确保父子模块依赖正常
-                            sh "mvn clean install -DskipTests"
+                            echo '===== 开始编译前端 ====='
+                            dir("${FRONT_DIR}") {
+                                sh "npm install --registry=https://registry.npmmirror.com"
+                                sh "npm run build:prod"
+                            }
                         }
                     }
                 }
             }
         }
 
-        stage('构建镜像与部署') {
-            parallel {
-                stage('部署后端') {
+                stage('部署前端') {
                     steps {
                         script {
-                            echo '===== 构建后端镜像 ====='
-                            // 使用根目录的Dockerfile构建，上下文为当前目录
-                            docker.build("${BACK_IMAGE}", "-f Dockerfile .")
+                            echo '===== 构建前端镜像 ====='
+                            // 进入前端目录构建，使用刚才创建的Dockerfile
+                            dir("${FRONT_DIR}") {
+                                docker.build("${FRONT_IMAGE}", ".")
+                            }
 
-                            echo '===== 启动后端容器 ====='
-                            sh "docker stop ruoyi-backend || true"
-                            sh "docker rm ruoyi-backend || true"
-                            
-                            // 启动容器：加入网络，映射端口，挂载日志
+                            echo '===== 启动前端容器 ====='
+                            sh "docker stop ruoyi-frontend || true"
+                            sh "docker rm ruoyi-frontend || true"
+
+                            // 启动容器：加入网络，映射端口
                             sh """
                                 docker run -d \
-                                --name ruoyi-backend \
+                                --name ruoyi-frontend \
                                 --network ${NETWORK_NAME} \
                                 --restart=always \
-                                -p ${BACK_PORT}:8080 \
-                                -v ${WORKSPACE}/logs:/home/ruoyi/logs \
-                                ${BACK_IMAGE}
+                                -p ${FRONT_PORT}:80 \
+                                ${FRONT_IMAGE}
                             """
                         }
                     }
                 }
 
-            }
-        }
-    }
-
     post {
         success {
             echo "✅ 部署成功！"
-            echo "后端访问：http://<服务器IP>:${BACK_PORT}"
+            echo "前端访问：http://<服务器IP>:${FRONT_PORT}"
         }
         failure {
             echo "❌ 部署失败，请查看控制台日志。"
