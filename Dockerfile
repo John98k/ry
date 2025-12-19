@@ -1,7 +1,20 @@
-# 替换为阿里云的openjdk 8-jre-alpine镜像（国内稳定）
-FROM eclipse-temurin:8-jre
-WORKDIR /app
-COPY ./ruoyi-admin/target/ruoyi-admin.jar app.jar
-EXPOSE 8080
-# 启动命令（可加JVM参数优化）
-CMD ["java", "-Xms256m", "-Xmx512m", "-jar", "app.jar"]
+# 基础镜像
+FROM eclipse-temurin:8-jre-alpine
+
+# 作者
+MAINTAINER ruoyi
+
+# 挂载目录
+VOLUME /home/ruoyi
+
+# 创建目录
+RUN mkdir -p /home/ruoyi
+
+# 指定路径
+WORKDIR /home/ruoyi
+
+# 复制jar文件到路径
+COPY ruoyi-admin/target/ruoyi-admin.jar /home/ruoyi/ruoyi-admin.jar
+
+# 启动系统服务
+ENTRYPOINT ["java","-jar","ruoyi-admin.jar"]
