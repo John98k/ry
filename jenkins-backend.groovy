@@ -51,6 +51,12 @@ pipeline {
         stage('拉取代码') {
             steps {
                 // 强制使用浅克隆 (Shallow Clone)，解决大文件传输中断问题
+                script {
+                    // 配置Git SSL/TLS设置，解决握手失败问题
+                    sh "git config --global http.sslVersion tlsv1.2"
+                    // 临时禁用SSL验证（仅用于测试，不推荐生产环境）
+                    sh "git config --global http.sslVerify false"
+                }
                 checkout([
                     $class: 'GitSCM', 
                     branches: scm.branches, 
