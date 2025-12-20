@@ -1,5 +1,6 @@
 # 基础镜像
-FROM eclipse-temurin:8-jre-alpine
+# 使用专门为ARM64架构构建的Java 8镜像
+FROM arm64v8/openjdk:8-jre-alpine
 
 # 作者
 MAINTAINER ruoyi

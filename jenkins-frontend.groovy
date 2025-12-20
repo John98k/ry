@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'Node.js 18'  // 请确保Jenkins全局工具配置中名称一致
+        nodejs 'Node.js 18',
+        maven 'Maven 3.9'  // 请确保Jenkins全局工具配置中名称一致
     }
 
     environment {
@@ -22,47 +23,6 @@ pipeline {
     }
 
     stages {
-        stage('初始化') {
-            steps {
-                script {
-                    echo '===== 环境初始化 ====='
-                    try {
-                        sh "git --version"
-                        // 在初始化阶段配置Git SSL/TLS设置，确保在所有Git操作前生效
-                        sh "git config --list"
-                        sh "git config --global --unset-all http.sslVersion"
-                        sh "git config --global http.sslVersion tlsv1.2"
-                        sh "git config --global --unset-all http.sslVerify"
-                        sh "git config --global http.sslVerify false"
-                        // 设置超时时间
-                        sh "git config --global http.postBuffer 524288000"
-                        sh "git config --global http.lowSpeedLimit 0"
-                        sh "git config --global http.lowSpeedTime 999999"
-                        sh "git config --list | grep http"
-                    } catch (Exception e) {
-                        echo "⚠️ 警告：找不到 git 命令或配置失败"
-                    }
-                    // 确保网络存在
-                    sh "docker network create ${NETWORK_NAME} || true"
-                }
-            }
-        }
-
-        stage('拉取代码') {
-            steps {
-                // 强制使用浅克隆 (Shallow Clone)，解决大文件传输中断问题
-                checkout([
-                    $class: 'GitSCM', 
-                    branches: scm.branches, 
-                    doGenerateSubmoduleConfigurations: false, 
-                    extensions: [
-                        [$class: 'CloneOption', depth: 1, noTags: false, reference: '', shallow: true]
-                    ], 
-                    submoduleCfg: [], 
-                    userRemoteConfigs: scm.userRemoteConfigs
-                ])
-            }
-        }
 
         stage('Node编译') {
             steps {
