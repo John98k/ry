@@ -16,10 +16,10 @@ pipeline {
         FRONT_IMAGE = "ruoyi-frontend:latest"
 
         // 端口映射
-        BACK_PORT = "8080"      // 后端端口（宿主:容器）
+        BACK_PORT = "8081"      // 后端端口（宿主:容器）
         FRONT_PORT = "80"        // 前端端口（宿主:容器）
         CONTAINER_PORT = "80"     // 前端容器内部端口（通常是Nginx默认的80端口）
-        HOST_PORT = "8080"        // 后端访问端口（与BACK_PORT一致）
+        HOST_PORT = "8081"        // 后端访问端口（与BACK_PORT一致）
 
         // 挂载点
         LOG_MOUNT = "${WORKSPACE}/logs:/home/ruoyi/logs"  // 日志目录挂载
@@ -111,7 +111,7 @@ pipeline {
                         --name ${BACK_CONTAINER} \
                         --network ${NETWORK_NAME} \
                         --restart=always \
-                        -p ${BACK_PORT}:8080 \
+                        -p ${BACK_PORT}:8081 \
                         -v ${LOG_MOUNT} \
                         ${BACK_IMAGE}
                     """
