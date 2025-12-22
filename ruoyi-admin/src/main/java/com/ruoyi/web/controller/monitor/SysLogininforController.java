@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -25,6 +28,7 @@ import com.ruoyi.system.service.ISysLogininforService;
  * 
  * @author ruoyi
  */
+@Api("系统访问记录")
 @RestController
 @RequestMapping("/monitor/logininfor")
 public class SysLogininforController extends BaseController
@@ -35,6 +39,7 @@ public class SysLogininforController extends BaseController
     @Autowired
     private SysPasswordService passwordService;
 
+    @ApiOperation("获取系统访问记录列表")
     @PreAuthorize("@ss.hasPermi('monitor:logininfor:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysLogininfor logininfor)
@@ -44,6 +49,7 @@ public class SysLogininforController extends BaseController
         return getDataTable(list);
     }
 
+    @ApiOperation("导出系统访问记录")
     @Log(title = "登录日志", businessType = BusinessType.EXPORT)
     @PreAuthorize("@ss.hasPermi('monitor:logininfor:export')")
     @PostMapping("/export")
@@ -54,6 +60,8 @@ public class SysLogininforController extends BaseController
         util.exportExcel(response, list, "登录日志");
     }
 
+    @ApiOperation("删除系统访问记录")
+    @ApiImplicitParam(name = "infoIds", value = "访问记录ID数组", required = true, dataType = "Long[]", paramType = "path", dataTypeClass = Long[].class)
     @PreAuthorize("@ss.hasPermi('monitor:logininfor:remove')")
     @Log(title = "登录日志", businessType = BusinessType.DELETE)
     @DeleteMapping("/{infoIds}")
@@ -62,6 +70,7 @@ public class SysLogininforController extends BaseController
         return toAjax(logininforService.deleteLogininforByIds(infoIds));
     }
 
+    @ApiOperation("清理系统访问记录")
     @PreAuthorize("@ss.hasPermi('monitor:logininfor:remove')")
     @Log(title = "登录日志", businessType = BusinessType.CLEAN)
     @DeleteMapping("/clean")
@@ -71,6 +80,8 @@ public class SysLogininforController extends BaseController
         return success();
     }
 
+    @ApiOperation("解锁账户")
+    @ApiImplicitParam(name = "userName", value = "用户名", required = true, dataType = "String", paramType = "path", dataTypeClass = String.class)
     @PreAuthorize("@ss.hasPermi('monitor:logininfor:unlock')")
     @Log(title = "账户解锁", businessType = BusinessType.OTHER)
     @GetMapping("/unlock/{userName}")

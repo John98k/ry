@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.StringUtils;
@@ -27,6 +31,7 @@ import com.ruoyi.system.domain.SysCache;
  * 
  * @author ruoyi
  */
+@Api("缓存监控")
 @RestController
 @RequestMapping("/monitor/cache")
 public class CacheController
@@ -45,6 +50,7 @@ public class CacheController
         caches.add(new SysCache(CacheConstants.PWD_ERR_CNT_KEY, "密码错误次数"));
     }
 
+    @ApiOperation("获取缓存监控信息")
     @PreAuthorize("@ss.hasPermi('monitor:cache:list')")
     @GetMapping()
     public AjaxResult getInfo() throws Exception
@@ -69,6 +75,7 @@ public class CacheController
         return AjaxResult.success(result);
     }
 
+    @ApiOperation("获取缓存名称列表")
     @PreAuthorize("@ss.hasPermi('monitor:cache:list')")
     @GetMapping("/getNames")
     public AjaxResult cache()
@@ -76,6 +83,8 @@ public class CacheController
         return AjaxResult.success(caches);
     }
 
+    @ApiOperation("根据缓存名称获取所有键")
+    @ApiImplicitParam(name = "cacheName", value = "缓存名称", required = true, dataType = "String", paramType = "path", dataTypeClass = String.class)
     @PreAuthorize("@ss.hasPermi('monitor:cache:list')")
     @GetMapping("/getKeys/{cacheName}")
     public AjaxResult getCacheKeys(@PathVariable String cacheName)
@@ -84,6 +93,11 @@ public class CacheController
         return AjaxResult.success(new TreeSet<>(cacheKeys));
     }
 
+    @ApiOperation("根据缓存名称和键获取值")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "cacheName", value = "缓存名称", required = true, dataType = "String", paramType = "path", dataTypeClass = String.class),
+        @ApiImplicitParam(name = "cacheKey", value = "缓存键", required = true, dataType = "String", paramType = "path", dataTypeClass = String.class)
+    })
     @PreAuthorize("@ss.hasPermi('monitor:cache:list')")
     @GetMapping("/getValue/{cacheName}/{cacheKey}")
     public AjaxResult getCacheValue(@PathVariable String cacheName, @PathVariable String cacheKey)
@@ -93,6 +107,8 @@ public class CacheController
         return AjaxResult.success(sysCache);
     }
 
+    @ApiOperation("清除指定缓存名称的所有缓存")
+    @ApiImplicitParam(name = "cacheName", value = "缓存名称", required = true, dataType = "String", paramType = "path", dataTypeClass = String.class)
     @PreAuthorize("@ss.hasPermi('monitor:cache:list')")
     @DeleteMapping("/clearCacheName/{cacheName}")
     public AjaxResult clearCacheName(@PathVariable String cacheName)
@@ -102,6 +118,8 @@ public class CacheController
         return AjaxResult.success();
     }
 
+    @ApiOperation("清除指定键的缓存")
+    @ApiImplicitParam(name = "cacheKey", value = "缓存键", required = true, dataType = "String", paramType = "path", dataTypeClass = String.class)
     @PreAuthorize("@ss.hasPermi('monitor:cache:list')")
     @DeleteMapping("/clearCacheKey/{cacheKey}")
     public AjaxResult clearCacheKey(@PathVariable String cacheKey)
@@ -110,6 +128,7 @@ public class CacheController
         return AjaxResult.success();
     }
 
+    @ApiOperation("清除所有缓存")
     @PreAuthorize("@ss.hasPermi('monitor:cache:list')")
     @DeleteMapping("/clearCacheAll")
     public AjaxResult clearCacheAll()

@@ -5,12 +5,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.config.RuoYiConfig;
 import com.ruoyi.common.utils.StringUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * 首页
  *
  * @author ruoyi
  */
+@Api("首页")
 @RestController
 public class SysIndexController
 {
@@ -21,6 +24,7 @@ public class SysIndexController
     /**
      * 访问首页，提示语
      */
+    @ApiOperation("访问首页")
     @RequestMapping("/")
     public String index()
     {

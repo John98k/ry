@@ -22,12 +22,17 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.SysUserOnline;
 import com.ruoyi.system.service.ISysUserOnlineService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * 在线用户监控
  * 
  * @author ruoyi
  */
+@Api("在线用户监控")
 @RestController
 @RequestMapping("/monitor/online")
 public class SysUserOnlineController extends BaseController
@@ -38,6 +43,11 @@ public class SysUserOnlineController extends BaseController
     @Autowired
     private RedisCache redisCache;
 
+    @ApiOperation("获取在线用户列表")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "ipaddr", value = "IP地址", dataType = "String"),
+        @ApiImplicitParam(name = "userName", value = "用户名", dataType = "String")
+    })
     @PreAuthorize("@ss.hasPermi('monitor:online:list')")
     @GetMapping("/list")
     public TableDataInfo list(String ipaddr, String userName)
@@ -72,6 +82,8 @@ public class SysUserOnlineController extends BaseController
     /**
      * 强退用户
      */
+    @ApiOperation("强退用户")
+    @ApiImplicitParam(name = "tokenId", value = "用户令牌ID", required = true, dataType = "String", paramType = "path", dataTypeClass = String.class)
     @PreAuthorize("@ss.hasPermi('monitor:online:forceLogout')")
     @Log(title = "在线用户", businessType = BusinessType.FORCE)
     @DeleteMapping("/{tokenId}")

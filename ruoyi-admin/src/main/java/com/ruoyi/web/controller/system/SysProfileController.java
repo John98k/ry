@@ -25,12 +25,16 @@ import com.ruoyi.common.utils.file.FileUtils;
 import com.ruoyi.common.utils.file.MimeTypeUtils;
 import com.ruoyi.framework.web.service.TokenService;
 import com.ruoyi.system.service.ISysUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiImplicitParam;
 
 /**
  * 个人信息 业务处理
  * 
  * @author ruoyi
  */
+@Api("个人信息管理")
 @RestController
 @RequestMapping("/system/user/profile")
 public class SysProfileController extends BaseController
@@ -44,6 +48,7 @@ public class SysProfileController extends BaseController
     /**
      * 个人信息
      */
+    @ApiOperation("获取个人信息")
     @GetMapping
     public AjaxResult profile()
     {
@@ -58,6 +63,8 @@ public class SysProfileController extends BaseController
     /**
      * 修改用户
      */
+    @ApiOperation("修改个人信息")
+    @ApiImplicitParam(name = "user", value = "用户信息", required = true, dataType = "SysUser", paramType = "body", dataTypeClass = SysUser.class)
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult updateProfile(@RequestBody SysUser user)
@@ -88,6 +95,8 @@ public class SysProfileController extends BaseController
     /**
      * 重置密码
      */
+    @ApiOperation("重置密码")
+    @ApiImplicitParam(name = "params", value = "密码信息（包含oldPassword和newPassword）", required = true, dataType = "Map", paramType = "body", dataTypeClass = Map.class)
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping("/updatePwd")
     public AjaxResult updatePwd(@RequestBody Map<String, String> params)
@@ -121,6 +130,8 @@ public class SysProfileController extends BaseController
     /**
      * 头像上传
      */
+    @ApiOperation("上传头像")
+    @ApiImplicitParam(name = "avatarfile", value = "头像文件", required = true, dataType = "MultipartFile", paramType = "form", dataTypeClass = MultipartFile.class)
     @Log(title = "用户头像", businessType = BusinessType.UPDATE)
     @PostMapping("/avatar")
     public AjaxResult avatar(@RequestParam("avatarfile") MultipartFile file) throws Exception

@@ -10,12 +10,16 @@ import com.ruoyi.common.core.domain.model.RegisterBody;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.web.service.SysRegisterService;
 import com.ruoyi.system.service.ISysConfigService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiImplicitParam;
 
 /**
  * 注册验证
  * 
  * @author ruoyi
  */
+@Api("注册验证")
 @RestController
 public class SysRegisterController extends BaseController
 {
@@ -25,6 +29,8 @@ public class SysRegisterController extends BaseController
     @Autowired
     private ISysConfigService configService;
 
+    @ApiOperation("用户注册")
+    @ApiImplicitParam(name = "user", value = "注册信息", required = true, dataType = "RegisterBody", paramType = "body", dataTypeClass = RegisterBody.class)
     @PostMapping("/register")
     public AjaxResult register(@RequestBody RegisterBody user)
     {

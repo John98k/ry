@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -23,10 +27,11 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.service.ISysDictTypeService;
 
 /**
- * 数据字典信息
+ * 数据字典类型管理
  * 
  * @author ruoyi
  */
+@Api("字典类型管理")
 @RestController
 @RequestMapping("/system/dict/type")
 public class SysDictTypeController extends BaseController
@@ -34,6 +39,8 @@ public class SysDictTypeController extends BaseController
     @Autowired
     private ISysDictTypeService dictTypeService;
 
+    @ApiOperation("获取字典类型列表")
+    @ApiImplicitParam(name = "dictType", value = "字典类型信息", dataType = "SysDictType", dataTypeClass = SysDictType.class)
     @PreAuthorize("@ss.hasPermi('system:dict:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysDictType dictType)
@@ -43,6 +50,11 @@ public class SysDictTypeController extends BaseController
         return getDataTable(list);
     }
 
+    @ApiOperation("导出字典类型列表")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "response", value = "Http响应对象", required = true, dataType = "HttpServletResponse", dataTypeClass = HttpServletResponse.class),
+        @ApiImplicitParam(name = "dictType", value = "字典类型信息", dataType = "SysDictType", dataTypeClass = SysDictType.class)
+    })
     @Log(title = "字典类型", businessType = BusinessType.EXPORT)
     @PreAuthorize("@ss.hasPermi('system:dict:export')")
     @PostMapping("/export")
@@ -56,6 +68,8 @@ public class SysDictTypeController extends BaseController
     /**
      * 查询字典类型详细
      */
+    @ApiOperation("查询字典类型详细")
+    @ApiImplicitParam(name = "dictId", value = "字典类型ID", required = true, dataType = "Long", paramType = "path", dataTypeClass = Long.class)
     @PreAuthorize("@ss.hasPermi('system:dict:query')")
     @GetMapping(value = "/{dictId}")
     public AjaxResult getInfo(@PathVariable Long dictId)
@@ -66,6 +80,8 @@ public class SysDictTypeController extends BaseController
     /**
      * 新增字典类型
      */
+    @ApiOperation("新增字典类型")
+    @ApiImplicitParam(name = "dict", value = "字典类型信息", required = true, dataType = "SysDictType", paramType = "body", dataTypeClass = SysDictType.class)
     @PreAuthorize("@ss.hasPermi('system:dict:add')")
     @Log(title = "字典类型", businessType = BusinessType.INSERT)
     @PostMapping
@@ -82,6 +98,8 @@ public class SysDictTypeController extends BaseController
     /**
      * 修改字典类型
      */
+    @ApiOperation("修改字典类型")
+    @ApiImplicitParam(name = "dict", value = "字典类型信息", required = true, dataType = "SysDictType", paramType = "body", dataTypeClass = SysDictType.class)
     @PreAuthorize("@ss.hasPermi('system:dict:edit')")
     @Log(title = "字典类型", businessType = BusinessType.UPDATE)
     @PutMapping

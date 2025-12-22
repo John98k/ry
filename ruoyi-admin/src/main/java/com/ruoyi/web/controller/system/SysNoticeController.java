@@ -19,12 +19,16 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.system.domain.SysNotice;
 import com.ruoyi.system.service.ISysNoticeService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * 公告 信息操作处理
  * 
  * @author ruoyi
  */
+@Api("通知公告管理")
 @RestController
 @RequestMapping("/system/notice")
 public class SysNoticeController extends BaseController
@@ -35,6 +39,8 @@ public class SysNoticeController extends BaseController
     /**
      * 获取通知公告列表
      */
+    @ApiOperation("获取通知公告列表")
+    @ApiImplicitParam(name = "notice", value = "通知公告信息", dataType = "SysNotice", dataTypeClass = SysNotice.class)
     @PreAuthorize("@ss.hasPermi('system:notice:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysNotice notice)
@@ -47,6 +53,8 @@ public class SysNoticeController extends BaseController
     /**
      * 根据通知公告编号获取详细信息
      */
+    @ApiOperation("根据通知公告编号获取详细信息")
+    @ApiImplicitParam(name = "noticeId", value = "通知公告ID", required = true, dataType = "Long", paramType = "path", dataTypeClass = Long.class)
     @PreAuthorize("@ss.hasPermi('system:notice:query')")
     @GetMapping(value = "/{noticeId}")
     public AjaxResult getInfo(@PathVariable Long noticeId)
@@ -57,6 +65,8 @@ public class SysNoticeController extends BaseController
     /**
      * 新增通知公告
      */
+    @ApiOperation("新增通知公告")
+    @ApiImplicitParam(name = "notice", value = "通知公告信息", required = true, dataType = "SysNotice", paramType = "body", dataTypeClass = SysNotice.class)
     @PreAuthorize("@ss.hasPermi('system:notice:add')")
     @Log(title = "通知公告", businessType = BusinessType.INSERT)
     @PostMapping
@@ -69,6 +79,8 @@ public class SysNoticeController extends BaseController
     /**
      * 修改通知公告
      */
+    @ApiOperation("修改通知公告")
+    @ApiImplicitParam(name = "notice", value = "通知公告信息", required = true, dataType = "SysNotice", paramType = "body", dataTypeClass = SysNotice.class)
     @PreAuthorize("@ss.hasPermi('system:notice:edit')")
     @Log(title = "通知公告", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -81,6 +93,8 @@ public class SysNoticeController extends BaseController
     /**
      * 删除通知公告
      */
+    @ApiOperation("删除通知公告")
+    @ApiImplicitParam(name = "noticeIds", value = "通知公告ID数组", required = true, dataType = "Long[]", paramType = "path", dataTypeClass = Long[].class)
     @PreAuthorize("@ss.hasPermi('system:notice:remove')")
     @Log(title = "通知公告", businessType = BusinessType.DELETE)
     @DeleteMapping("/{noticeIds}")

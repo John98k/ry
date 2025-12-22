@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import com.google.code.kaptcha.Producer;
 import com.ruoyi.common.config.RuoYiConfig;
 import com.ruoyi.common.constant.CacheConstants;
@@ -25,6 +27,7 @@ import com.ruoyi.system.service.ISysConfigService;
  * 
  * @author ruoyi
  */
+@Api("验证码操作处理")
 @RestController
 public class CaptchaController
 {
@@ -42,6 +45,7 @@ public class CaptchaController
     /**
      * 生成验证码
      */
+    @ApiOperation("生成验证码")
     @GetMapping("/captchaImage")
     public AjaxResult getCode(HttpServletResponse response) throws IOException
     {

@@ -23,12 +23,16 @@ import com.ruoyi.framework.web.service.SysPermissionService;
 import com.ruoyi.framework.web.service.TokenService;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.ISysMenuService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiImplicitParam;
 
 /**
  * 登录验证
  * 
  * @author ruoyi
  */
+@Api("登录验证")
 @RestController
 public class SysLoginController
 {
@@ -53,6 +57,8 @@ public class SysLoginController
      * @param loginBody 登录信息
      * @return 结果
      */
+    @ApiOperation("用户登录")
+    @ApiImplicitParam(name = "loginBody", value = "登录信息", required = true, dataType = "LoginBody", paramType = "body", dataTypeClass = LoginBody.class)
     @PostMapping("/login")
     public AjaxResult login(@RequestBody LoginBody loginBody)
     {
@@ -69,6 +75,7 @@ public class SysLoginController
      * 
      * @return 用户信息
      */
+    @ApiOperation("获取用户信息")
     @GetMapping("getInfo")
     public AjaxResult getInfo()
     {
@@ -97,6 +104,7 @@ public class SysLoginController
      * 
      * @return 路由信息
      */
+    @ApiOperation("获取路由信息")
     @GetMapping("getRouters")
     public AjaxResult getRouters()
     {

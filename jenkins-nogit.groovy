@@ -17,9 +17,8 @@ pipeline {
 
         // 端口映射
         BACK_PORT = "8081"      // 后端端口（宿主:容器）
-        FRONT_PORT = "80"        // 前端端口（宿主:容器）
+        FRONT_PORT = "8088"        // 前端端口（宿主:容器）
         CONTAINER_PORT = "80"     // 前端容器内部端口（通常是Nginx默认的80端口）
-        HOST_PORT = "8081"        // 后端访问端口（与BACK_PORT一致）
 
         // 挂载点
         LOG_MOUNT = "${WORKSPACE}/logs:/home/ruoyi/logs"  // 日志目录挂载
@@ -150,7 +149,7 @@ pipeline {
     post {
         success {
             echo "✅ 前后端部署成功！"
-            echo "后端访问地址：http://<服务器IP>:${HOST_PORT}"
+            echo "后端访问地址：http://<服务器IP>:${BACK_PORT}"
             echo "前端访问地址：http://<服务器IP>:${FRONT_PORT}"
         }
         failure {

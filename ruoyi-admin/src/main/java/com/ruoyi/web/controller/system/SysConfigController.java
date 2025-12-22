@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -27,6 +31,7 @@ import com.ruoyi.system.service.ISysConfigService;
  * 
  * @author ruoyi
  */
+@Api("参数配置管理")
 @RestController
 @RequestMapping("/system/config")
 public class SysConfigController extends BaseController
@@ -37,6 +42,8 @@ public class SysConfigController extends BaseController
     /**
      * 获取参数配置列表
      */
+    @ApiOperation("获取参数配置列表")
+    @ApiImplicitParam(name = "config", value = "参数配置信息", dataType = "SysConfig", dataTypeClass = SysConfig.class)
     @PreAuthorize("@ss.hasPermi('system:config:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysConfig config)
@@ -46,6 +53,11 @@ public class SysConfigController extends BaseController
         return getDataTable(list);
     }
 
+    @ApiOperation("导出参数配置列表")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "response", value = "Http响应对象", required = true, dataType = "HttpServletResponse", dataTypeClass = HttpServletResponse.class),
+        @ApiImplicitParam(name = "config", value = "参数配置信息", dataType = "SysConfig", dataTypeClass = SysConfig.class)
+    })
     @Log(title = "参数管理", businessType = BusinessType.EXPORT)
     @PreAuthorize("@ss.hasPermi('system:config:export')")
     @PostMapping("/export")
@@ -59,6 +71,8 @@ public class SysConfigController extends BaseController
     /**
      * 根据参数编号获取详细信息
      */
+    @ApiOperation("根据参数编号获取详细信息")
+    @ApiImplicitParam(name = "configId", value = "参数ID", required = true, dataType = "Long", paramType = "path", dataTypeClass = Long.class)
     @PreAuthorize("@ss.hasPermi('system:config:query')")
     @GetMapping(value = "/{configId}")
     public AjaxResult getInfo(@PathVariable Long configId)
@@ -69,6 +83,8 @@ public class SysConfigController extends BaseController
     /**
      * 根据参数键名查询参数值
      */
+    @ApiOperation("根据参数键名查询参数值")
+    @ApiImplicitParam(name = "configKey", value = "参数键名", required = true, dataType = "String", paramType = "path", dataTypeClass = String.class)
     @GetMapping(value = "/configKey/{configKey}")
     public AjaxResult getConfigKey(@PathVariable String configKey)
     {
@@ -78,6 +94,8 @@ public class SysConfigController extends BaseController
     /**
      * 新增参数配置
      */
+    @ApiOperation("新增参数配置")
+    @ApiImplicitParam(name = "config", value = "参数配置信息", required = true, dataType = "SysConfig", paramType = "body", dataTypeClass = SysConfig.class)
     @PreAuthorize("@ss.hasPermi('system:config:add')")
     @Log(title = "参数管理", businessType = BusinessType.INSERT)
     @PostMapping
@@ -94,6 +112,8 @@ public class SysConfigController extends BaseController
     /**
      * 修改参数配置
      */
+    @ApiOperation("修改参数配置")
+    @ApiImplicitParam(name = "config", value = "参数配置信息", required = true, dataType = "SysConfig", paramType = "body", dataTypeClass = SysConfig.class)
     @PreAuthorize("@ss.hasPermi('system:config:edit')")
     @Log(title = "参数管理", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -110,6 +130,8 @@ public class SysConfigController extends BaseController
     /**
      * 删除参数配置
      */
+    @ApiOperation("删除参数配置")
+    @ApiImplicitParam(name = "configIds", value = "参数ID数组", required = true, dataType = "Long[]", paramType = "path", dataTypeClass = Long[].class)
     @PreAuthorize("@ss.hasPermi('system:config:remove')")
     @Log(title = "参数管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{configIds}")
@@ -122,6 +144,7 @@ public class SysConfigController extends BaseController
     /**
      * 刷新参数缓存
      */
+    @ApiOperation("刷新参数缓存")
     @PreAuthorize("@ss.hasPermi('system:config:remove')")
     @Log(title = "参数管理", businessType = BusinessType.CLEAN)
     @DeleteMapping("/refreshCache")

@@ -89,6 +89,13 @@
             <artifactId>jjwt</artifactId>
         </dependency>
 
+        <!-- swagger annotations -->
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+
         <!-- Jaxb -->
         <dependency>
             <groupId>javax.xml.bind</groupId>

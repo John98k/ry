@@ -51,6 +51,7 @@ if [ ! -f "${INIT_SQL_FILE}" ]; then
           --name "${MYSQL_CONTAINER}" \
           --restart=always \
           -p "${MYSQL_PORT}:3306" \
+          --network ruoyi-net \
           -v "${MYSQL_DATA_DIR}:/var/lib/mysql" \
           -v "${INIT_SQL_FILE}:/docker-entrypoint-initdb.d/init.sql" \
           -e MYSQL_ROOT_PASSWORD="${MYSQL_ROOT_PWD}" \
@@ -78,6 +79,7 @@ else
       --name "${MYSQL_CONTAINER}" \
       --restart=always \
       -p "${MYSQL_PORT}:3306" \
+      --network ruoyi-net \
       -v "${MYSQL_DATA_DIR}:/var/lib/mysql" \
       -v "${INIT_SQL_FILE}:/docker-entrypoint-initdb.d/init.sql" \
       -e MYSQL_ROOT_PASSWORD="${MYSQL_ROOT_PWD}" \

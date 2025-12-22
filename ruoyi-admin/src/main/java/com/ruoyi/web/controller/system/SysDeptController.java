@@ -21,12 +21,16 @@ import com.ruoyi.common.core.domain.entity.SysDept;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.service.ISysDeptService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * 部门信息
  * 
  * @author ruoyi
  */
+@Api("部门信息管理")
 @RestController
 @RequestMapping("/system/dept")
 public class SysDeptController extends BaseController
@@ -37,6 +41,8 @@ public class SysDeptController extends BaseController
     /**
      * 获取部门列表
      */
+    @ApiOperation("获取部门列表")
+    @ApiImplicitParam(name = "dept", value = "部门信息", dataType = "SysDept", dataTypeClass = SysDept.class)
     @PreAuthorize("@ss.hasPermi('system:dept:list')")
     @GetMapping("/list")
     public AjaxResult list(SysDept dept)
@@ -48,6 +54,8 @@ public class SysDeptController extends BaseController
     /**
      * 查询部门列表（排除节点）
      */
+    @ApiOperation("查询部门列表（排除节点）")
+    @ApiImplicitParam(name = "deptId", value = "部门ID", dataType = "Long", paramType = "path", dataTypeClass = Long.class)
     @PreAuthorize("@ss.hasPermi('system:dept:list')")
     @GetMapping("/list/exclude/{deptId}")
     public AjaxResult excludeChild(@PathVariable(value = "deptId", required = false) Long deptId)
@@ -60,6 +68,8 @@ public class SysDeptController extends BaseController
     /**
      * 根据部门编号获取详细信息
      */
+    @ApiOperation("根据部门编号获取详细信息")
+    @ApiImplicitParam(name = "deptId", value = "部门ID", required = true, dataType = "Long", paramType = "path", dataTypeClass = Long.class)
     @PreAuthorize("@ss.hasPermi('system:dept:query')")
     @GetMapping(value = "/{deptId}")
     public AjaxResult getInfo(@PathVariable Long deptId)
@@ -71,6 +81,8 @@ public class SysDeptController extends BaseController
     /**
      * 新增部门
      */
+    @ApiOperation("新增部门")
+    @ApiImplicitParam(name = "dept", value = "部门信息", required = true, dataType = "SysDept", paramType = "body", dataTypeClass = SysDept.class)
     @PreAuthorize("@ss.hasPermi('system:dept:add')")
     @Log(title = "部门管理", businessType = BusinessType.INSERT)
     @PostMapping
@@ -87,6 +99,8 @@ public class SysDeptController extends BaseController
     /**
      * 修改部门
      */
+    @ApiOperation("修改部门")
+    @ApiImplicitParam(name = "dept", value = "部门信息", required = true, dataType = "SysDept", paramType = "body", dataTypeClass = SysDept.class)
     @PreAuthorize("@ss.hasPermi('system:dept:edit')")
     @Log(title = "部门管理", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -113,6 +127,8 @@ public class SysDeptController extends BaseController
     /**
      * 删除部门
      */
+    @ApiOperation("删除部门")
+    @ApiImplicitParam(name = "deptId", value = "部门ID", required = true, dataType = "Long", paramType = "path", dataTypeClass = Long.class)
     @PreAuthorize("@ss.hasPermi('system:dept:remove')")
     @Log(title = "部门管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{deptId}")
