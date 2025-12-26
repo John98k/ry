@@ -62,9 +62,7 @@ public class SwaggerConfig
                 // 扫描所有 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build()
-                /* 设置安全模式，swagger可以设置访问token */
-                .securitySchemes(securitySchemes())
-                .securityContexts(securityContexts())
+                /* 移除安全模式设置，允许API文档匿名访问 */
                 .pathMapping(pathMapping);
     }
 

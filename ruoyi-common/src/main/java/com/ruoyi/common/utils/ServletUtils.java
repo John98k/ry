@@ -138,10 +138,22 @@ public class ServletUtils
      */
     public static void renderString(HttpServletResponse response, String string)
     {
+        renderString(response, string, "application/json");
+    }
+
+    /**
+     * 将字符串渲染到客户端
+     * 
+     * @param response 渲染对象
+     * @param string 待渲染的字符串
+     * @param contentType 内容类型
+     */
+    public static void renderString(HttpServletResponse response, String string, String contentType)
+    {
         try
         {
             response.setStatus(200);
-            response.setContentType("application/json");
+            response.setContentType(contentType);
             response.setCharacterEncoding("utf-8");
             response.getWriter().print(string);
         }

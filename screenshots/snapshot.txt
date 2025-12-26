@@ -1,0 +1,96 @@
+uid=1_0 RootWebArea "Swagger UI Dist API 文档" url="http://localhost:8081/swagger-ui-dist/index.html"
+  uid=1_1 textbox value="/v3/api-docs"
+  uid=1_2 button "Explore"
+  uid=1_3 button
+  uid=1_4 heading "标题：若依管理系统_接口文档 版本号:3.9.0 OAS 3.0" level="1"
+  uid=1_5 link "/v3/api-docs" url="http://localhost:8081/v3/api-docs"
+    uid=1_6 StaticText "/v3/api-docs"
+  uid=1_7 StaticText "描述：用于管理集团旗下公司的人员信息,具体包括XXX,XXX模块..."
+  uid=1_8 StaticText "Servers"
+  uid=1_9 combobox expandable haspopup="menu" value="http://localhost:8081 - Inferred Url"
+    uid=1_10 option "http://localhost:8081 - Inferred Url" selectable selected value="http://localhost:8081 - Inferred Url"
+  uid=1_11 link "cache-controller" url="http://localhost:8081/swagger-ui-dist/index.html#/cache-controller"
+    uid=1_12 StaticText "cache-controller"
+  uid=1_13 StaticText "Cache Controller"
+  uid=1_14 button "Expand operation" expandable
+  uid=1_15 link "captcha-controller" url="http://localhost:8081/swagger-ui-dist/index.html#/captcha-controller"
+    uid=1_16 StaticText "captcha-controller"
+  uid=1_17 StaticText "Captcha Controller"
+  uid=1_18 button "Expand operation" expandable
+  uid=1_19 link "common-controller" url="http://localhost:8081/swagger-ui-dist/index.html#/common-controller"
+    uid=1_20 StaticText "common-controller"
+  uid=1_21 StaticText "Common Controller"
+  uid=1_22 button "Expand operation" expandable
+  uid=1_23 link "server-controller" url="http://localhost:8081/swagger-ui-dist/index.html#/server-controller"
+    uid=1_24 StaticText "server-controller"
+  uid=1_25 StaticText "Server Controller"
+  uid=1_26 button "Expand operation" expandable
+  uid=1_27 link "sys-config-controller" url="http://localhost:8081/swagger-ui-dist/index.html#/sys-config-controller"
+    uid=1_28 StaticText "sys-config-controller"
+  uid=1_29 StaticText "Sys Config Controller"
+  uid=1_30 button "Expand operation" expandable
+  uid=1_31 link "sys-dept-controller" url="http://localhost:8081/swagger-ui-dist/index.html#/sys-dept-controller"
+    uid=1_32 StaticText "sys-dept-controller"
+  uid=1_33 StaticText "Sys Dept Controller"
+  uid=1_34 button "Expand operation" expandable
+  uid=1_35 link "sys-dict-data-controller" url="http://localhost:8081/swagger-ui-dist/index.html#/sys-dict-data-controller"
+    uid=1_36 StaticText "sys-dict-data-controller"
+  uid=1_37 StaticText "Sys Dict Data Controller"
+  uid=1_38 button "Expand operation" expandable
+  uid=1_39 link "sys-dict-type-controller" url="http://localhost:8081/swagger-ui-dist/index.html#/sys-dict-type-controller"
+    uid=1_40 StaticText "sys-dict-type-controller"
+  uid=1_41 StaticText "Sys Dict Type Controller"
+  uid=1_42 button "Expand operation" expandable
+  uid=1_43 link "sys-index-controller" url="http://localhost:8081/swagger-ui-dist/index.html#/sys-index-controller"
+    uid=1_44 StaticText "sys-index-controller"
+  uid=1_45 StaticText "Sys Index Controller"
+  uid=1_46 button "Expand operation" expandable
+  uid=1_47 link "sys-login-controller" url="http://localhost:8081/swagger-ui-dist/index.html#/sys-login-controller"
+    uid=1_48 StaticText "sys-login-controller"
+  uid=1_49 StaticText "Sys Login Controller"
+  uid=1_50 button "Expand operation" expandable
+  uid=1_51 link "sys-logininfor-controller" url="http://localhost:8081/swagger-ui-dist/index.html#/sys-logininfor-controller"
+    uid=1_52 StaticText "sys-logininfor-controller"
+  uid=1_53 StaticText "Sys Logininfor Controller"
+  uid=1_54 button "Expand operation" expandable
+  uid=1_55 link "sys-menu-controller" url="http://localhost:8081/swagger-ui-dist/index.html#/sys-menu-controller"
+    uid=1_56 StaticText "sys-menu-controller"
+  uid=1_57 StaticText "Sys Menu Controller"
+  uid=1_58 button "Expand operation" expandable
+  uid=1_59 link "sys-notice-controller" url="http://localhost:8081/swagger-ui-dist/index.html#/sys-notice-controller"
+    uid=1_60 StaticText "sys-notice-controller"
+  uid=1_61 StaticText "Sys Notice Controller"
+  uid=1_62 button "Expand operation" expandable
+  uid=1_63 link "sys-operlog-controller" url="http://localhost:8081/swagger-ui-dist/index.html#/sys-operlog-controller"
+    uid=1_64 StaticText "sys-operlog-controller"
+  uid=1_65 StaticText "Sys Operlog Controller"
+  uid=1_66 button "Expand operation" expandable
+  uid=1_67 link "sys-post-controller" url="http://localhost:8081/swagger-ui-dist/index.html#/sys-post-controller"
+    uid=1_68 StaticText "sys-post-controller"
+  uid=1_69 StaticText "Sys Post Controller"
+  uid=1_70 button "Expand operation" expandable
+  uid=1_71 link "sys-profile-controller" url="http://localhost:8081/swagger-ui-dist/index.html#/sys-profile-controller"
+    uid=1_72 StaticText "sys-profile-controller"
+  uid=1_73 StaticText "Sys Profile Controller"
+  uid=1_74 button "Expand operation" expandable
+  uid=1_75 link "sys-register-controller" url="http://localhost:8081/swagger-ui-dist/index.html#/sys-register-controller"
+    uid=1_76 StaticText "sys-register-controller"
+  uid=1_77 StaticText "Sys Register Controller"
+  uid=1_78 button "Expand operation" expandable
+  uid=1_79 link "sys-role-controller" url="http://localhost:8081/swagger-ui-dist/index.html#/sys-role-controller"
+    uid=1_80 StaticText "sys-role-controller"
+  uid=1_81 StaticText "Sys Role Controller"
+  uid=1_82 button "Expand operation" expandable
+  uid=1_83 link "sys-user-controller" url="http://localhost:8081/swagger-ui-dist/index.html#/sys-user-controller"
+    uid=1_84 StaticText "sys-user-controller"
+  uid=1_85 StaticText "Sys User Controller"
+  uid=1_86 button "Expand operation" expandable
+  uid=1_87 link "sys-user-online-controller" url="http://localhost:8081/swagger-ui-dist/index.html#/sys-user-online-controller"
+    uid=1_88 StaticText "sys-user-online-controller"
+  uid=1_89 StaticText "Sys User Online Controller"
+  uid=1_90 button "Expand operation" expandable
+  uid=1_91 link "test-controller" url="http://localhost:8081/swagger-ui-dist/index.html#/test-controller"
+    uid=1_92 StaticText "test-controller"
+  uid=1_93 StaticText "Test Controller"
+  uid=1_94 button "Expand operation" expandable
+  uid=1_95 button "Schemas" expandable

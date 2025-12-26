@@ -109,12 +109,14 @@ public class SecurityConfig
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             // 注解标记允许匿名访问的url
             .authorizeHttpRequests((requests) -> {
-                permitAllUrl.getUrls().forEach(url -> requests.antMatchers(url).permitAll());
-                // 对于登录login 注册register 验证码captchaImage 允许匿名访问
-                requests.antMatchers("/login", "/register", "/captchaImage").permitAll()
-                    // 静态资源，可匿名访问
+                // API文档相关端点，优先允许匿名访问
+                requests.antMatchers("/v3/api-docs", "/swagger-ui.html", "/swagger-ui/**", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/*/*/api-docs", "/**/api-docs", "/druid/**", "/doc.html", "/favicon.ico", "/dev-api/**").permitAll()
+                    // 登录注册等端点允许匿名访问
+                    .antMatchers("/login", "/register", "/captchaImage").permitAll()
+                    // 静态资源允许匿名访问
                     .antMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**").permitAll()
-                    .antMatchers("/swagger-ui.html", "/swagger-ui/**", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**", "/doc.html", "/favicon.ico").permitAll()
+                    // 注解标记允许匿名访问的url
+                    .antMatchers(permitAllUrl.getUrls().toArray(new String[0])).permitAll()
                     // 除上面外的所有请求全部需要鉴权认证
                     .anyRequest().authenticated();
             })
