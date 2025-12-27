@@ -13458,3 +13458,8 @@ $21
 sys_dict:sys_user_sex
 $1245
 [{"@type":"com.ruoyi.common.core.domain.entity.SysDictData","createBy":"admin","createTime":"2025-12-10 14:21:55","default":false,"dictCode":100L,"dictLabel":"外星人","dictSort":0L,"dictType":"sys_user_sex","dictValue":"NPC","isDefault":"N","listClass":"default","params":{"@type":"java.util.HashMap"},"status":"0"},{"@type":"com.ruoyi.common.core.domain.entity.SysDictData","createBy":"admin","createTime":"2025-12-09 14:07:53","default":true,"dictCode":1L,"dictLabel":"男","dictSort":1L,"dictType":"sys_user_sex","dictValue":"0","isDefault":"Y","params":{"@type":"java.util.HashMap"},"remark":"性别男","status":"0"},{"@type":"com.ruoyi.common.core.domain.entity.SysDictData","createBy":"admin","createTime":"2025-12-09 14:07:53","default":false,"dictCode":2L,"dictLabel":"女","dictSort":2L,"dictType":"sys_user_sex","dictValue":"1","isDefault":"N","params":{"@type":"java.util.HashMap"},"remark":"性别女","status":"0"},{"@type":"com.ruoyi.common.core.domain.entity.SysDictData","createBy":"admin","createTime":"2025-12-09 14:07:53","default":false,"dictCode":3L,"dictLabel":"未知","dictSort":3L,"dictType":"sys_user_sex","dictValue":"2","isDefault":"N","params":{"@type":"java.util.HashMap"},"remark":"性别未知","status":"0"}]
+*2
+$3
+DEL
+$49
+login_tokens:631919a3-ced0-4843-ab70-a82477591fec

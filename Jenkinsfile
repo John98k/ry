@@ -30,6 +30,11 @@ pipeline {
                 script {
                     echo '===== 环境初始化与检查 ====='
                     
+                    // 配置 Git 以解决 TLS 连接问题
+                    sh "git config --global http.sslVersion tlsv1.2"
+                    sh "git config --global http.sslVerify false"
+                    sh "git config --global http.postBuffer 524288000"
+                    
                     // 检查工具版本
                     sh "mvn -v || echo 'Maven 未安装'"
                     sh "node -v || echo 'Node.js 未安装'"
