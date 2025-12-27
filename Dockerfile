@@ -5,6 +5,9 @@ FROM arm64v8/openjdk:8-jre-alpine
 # 作者
 MAINTAINER ruoyi
 
+# 安装字体和依赖
+RUN apk add --no-cache ttf-dejavu fontconfig
+
 # 挂载目录
 VOLUME /home/ruoyi
 
@@ -18,4 +21,4 @@ WORKDIR /home/ruoyi
 COPY ruoyi-admin/target/ruoyi-admin.jar /home/ruoyi/ruoyi-admin.jar
 
 # 启动系统服务
-ENTRYPOINT ["java","-jar","ruoyi-admin.jar"]
+ENTRYPOINT ["java","-Dserver.port=8080","-jar","ruoyi-admin.jar"]
